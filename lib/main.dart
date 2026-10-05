@@ -1,55 +1,36 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const CollegeEventApp());
+  runApp(const WidgetDemoApp());
 }
 
-class CollegeEventApp extends StatelessWidget {
-  const CollegeEventApp({super.key});
+class WidgetDemoApp extends StatelessWidget {
+  const WidgetDemoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'College Event Management',
+      title: 'Flutter Widgets Demo',
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
-        scaffoldBackgroundColor: Colors.grey[100],
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.indigo,
+        ),
+        useMaterial3: true,
       ),
-      home: const EventHomePage(),
+      home: const WidgetDemoPage(),
     );
   }
 }
 
-class EventHomePage extends StatelessWidget {
-  const EventHomePage({super.key});
-
-  final List<Map<String, String>> events = const [
-    {
-      'name': 'Tech Fest 2026',
-      'date': 'October 15, 2026',
-      'venue': 'Main Auditorium',
-      'type': 'Technical'
-    },
-    {
-      'name': 'Cultural Fest',
-      'date': 'October 20, 2026',
-      'venue': 'College Ground',
-      'type': 'Cultural'
-    },
-    {
-      'name': 'Sports Meet',
-      'date': 'October 25, 2026',
-      'venue': 'Sports Complex',
-      'type': 'Sports'
-    },
-  ];
+class WidgetDemoPage extends StatelessWidget {
+  const WidgetDemoPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('College Events'),
+        title: const Text('Flutter Widgets'),
         centerTitle: true,
       ),
 
@@ -61,162 +42,184 @@ class EventHomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              // STACK WIDGET
-              Stack(
-                children: [
-                  Container(
-                    height: 180,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Colors.indigo, Colors.blue],
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
+              // TEXT WIDGET
+              const Text(
+                'Basic Flutter Widgets',
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.indigo,
+                ),
+              ),
 
-                  const Positioned(
-                    left: 20,
-                    top: 25,
-                    child: Text(
-                      'Welcome to\nCollege Events!',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+              const SizedBox(height: 20),
 
-                  Positioned(
-                    right: 20,
-                    bottom: 20,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Register action
-                      },
-                      child: const Text('Explore Events'),
-                    ),
+              // IMAGE WIDGET
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.network(
+                  'https://picsum.photos/600/250',
+                  height: 200,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              // CONTAINER WIDGET
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.blue.shade100,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: const Text(
+                  'This is a Container Widget',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              // ROW WIDGET
+              const Text(
+                'Row Widget',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              const SizedBox(height: 10),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const [
+                  Icon(
+                    Icons.home,
+                    size: 40,
+                    color: Colors.blue,
+                  ),
+                  Icon(
+                    Icons.favorite,
+                    size: 40,
+                    color: Colors.red,
+                  ),
+                  Icon(
+                    Icons.settings,
+                    size: 40,
+                    color: Colors.grey,
                   ),
                 ],
               ),
 
               const SizedBox(height: 25),
 
+              // COLUMN WIDGET
               const Text(
-                'Upcoming Events',
+                'Column Widget',
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
 
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
 
-              // COLUMN + ROW WIDGETS
               Column(
-                children: events.map((event) {
-                  return Card(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    elevation: 4,
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
+                children: const [
+                  Text('First Item'),
+                  Text('Second Item'),
+                  Text('Third Item'),
+                ],
+              ),
 
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+              const SizedBox(height: 25),
 
-                          Text(
-                            event['name']!,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+              // BUTTON WIDGET
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Button Clicked!'),
+                      ),
+                    );
+                  },
+                  child: const Text('Click Me'),
+                ),
+              ),
 
-                          const SizedBox(height: 10),
+              const SizedBox(height: 25),
 
-                          // ROW WIDGET
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.calendar_month,
-                                color: Colors.indigo,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(event['date']!),
-                            ],
-                          ),
+              // STACK WIDGET
+              const Text(
+                'Stack Widget',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
 
-                          const SizedBox(height: 8),
+              const SizedBox(height: 10),
 
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.location_on,
-                                color: Colors.red,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(event['venue']!),
-                            ],
-                          ),
+              Center(
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      height: 180,
+                      width: 300,
+                      color: Colors.indigo,
+                    ),
 
-                          const SizedBox(height: 8),
+                    const Icon(
+                      Icons.school,
+                      size: 80,
+                      color: Colors.white,
+                    ),
 
-                          Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                            children: [
-                              Chip(
-                                label: Text(event['type']!),
-                                backgroundColor:
-                                    Colors.indigo.shade100,
-                              ),
-
-                              ElevatedButton(
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        title: Text(
-                                          event['name']!,
-                                        ),
-                                        content: const Text(
-                                          'You have selected this event.',
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text('OK'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                },
-                                child: const Text('Register'),
-                              ),
-                            ],
-                          ),
-                        ],
+                    const Positioned(
+                      bottom: 10,
+                      child: Text(
+                        'College',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  );
-                }).toList(),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 25),
+
+              // CARD AND LISTTILE
+              Card(
+                elevation: 5,
+                child: ListTile(
+                  leading: const Icon(
+                    Icons.event,
+                    color: Colors.indigo,
+                  ),
+                  title: const Text('College Event'),
+                  subtitle: const Text(
+                    'Flutter Widget Demonstration',
+                  ),
+                  trailing: const Icon(Icons.arrow_forward),
+                  onTap: () {},
+                ),
               ),
             ],
           ),
         ),
-      ),
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add new event
-        },
-        child: const Icon(Icons.add),
       ),
     );
   }
